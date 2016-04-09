@@ -1,0 +1,89 @@
+#!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# -----------------------------------------------------------------------------
+# Copyright (C) Business Learning Incorporated (businesslearninginc.com)
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License at <http://www.gnu.org/licenses/> for
+# more details.
+# -----------------------------------------------------------------------------
+#
+# bash library for command line argument loading/parsing/validating
+#
+# version: 0.1.0
+#
+
+EXEC_DIR="$(dirname "$0")"
+. ${EXEC_DIR}/lib/general
+
+# -----------------------------------------------------------------------------
+# load command line argument options
+#
+function load_args_file {
+
+  ARGS_HEADER[1]=$(jq -r '.details.title' < ${ARGS_FILE})
+  ARGS_HEADER[2]=$(jq -r '.details.syntax' < ${ARGS_FILE})
+
+  for ((j=1;j<=COUNT_ARGS;j++)) do
+    ARGS[${j},1]=$(jq -r '.arguments['${j}-1'] | .short_form' < ${ARGS_FILE})
+    ARGS[${j},2]=$(jq -r '.arguments['${j}-1'] | .long_form' < ${ARGS_FILE})
+    ARGS[${j},3]=$(jq -r '.arguments['${j}-1'] | .text_string' < ${ARGS_FILE})
+    ARGS[${j},4]=$(jq -r '.arguments['${j}-1'] | .description' < ${ARGS_FILE})
+  done
+
+}
+
+# -----------------------------------------------------------------------------
+# scan cmdline for arguments
+#
+function scan_for_args {
+
+  while [[ $# -gt 0 ]]
+  do
+    CUR_ARG="$1"
+
+    for ((j=1;j<=COUNT_ARGS;j++)) do
+      ARG_OPTIONS='+('${ARGS[${j},1]}'|'${ARGS[${j},2]}')'
+
+      case $CUR_ARG in
+        $ARG_OPTIONS)
+          ARGS[${j},0]="$2"
+          shift # skip argument
+          ;;
+        *)
+          # unknown argument
+          ;;
+      esac
+    done
+
+    shift # skip argument or value
+  done
+
+}
+
+# -----------------------------------------------------------------------------
+# check for args completeness
+#
+function check_for_args_completeness {
+
+  ((COUNT_ERRS=0))
+  for ((j=1;j<=COUNT_ARGS;j++)) do
+    if [ -z "${ARGS[${j},0]}" ]; then
+      echo "Error: ${ARGS[${j},3]} argument (${ARGS[${j},1]}|${ARGS[${j},2]}) missing."
+      ((COUNT_ERRS++))
+    fi
+  done
+
+  if [ ${COUNT_ERRS} -gt 0 ]; then
+    quit
+  fi
+
+}

@@ -1,0 +1,68 @@
+#!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# -----------------------------------------------------------------------------
+# Copyright (C) Business Learning Incorporated (businesslearninginc.com)
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License at <http://www.gnu.org/licenses/> for
+# more details.
+# -----------------------------------------------------------------------------
+#
+# bash library for general-purpose script processing
+#
+# version: 0.1.0
+#
+
+# -----------------------------------------------------------------------------
+# check dependencies
+#
+function check_dependencies {
+
+  local -a DEPS=("${!1}")
+
+  for i in "${DEPS[@]}"; do
+    if ! type $i &>/dev/null; then
+      echo
+      echo "Error: $i program not installed."
+      quit
+    fi
+  done
+}
+
+# -----------------------------------------------------------------------------
+# display script banner
+#
+function display_banner {
+
+  echo
+  echo " |"
+  echo " |" ${ARGS_HEADER[1]}
+  echo " |"
+  echo " | Usage:"
+  echo " |  " ${ARGS_HEADER[2]}
+  echo " |"
+  for ((j=1;j<=COUNT_ARGS;j++)) do
+    echo -e ' |  ' ${ARGS[${j},1]}',' ${ARGS[${j},2]}'\t'${ARGS[${j},4]}
+  done
+  echo " |"
+  echo
+
+}
+
+# -----------------------------------------------------------------------------
+# exit wrapper
+#
+function quit {
+
+  echo
+  exit 1
+
+}
