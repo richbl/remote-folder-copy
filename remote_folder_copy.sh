@@ -18,7 +18,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 # A bash script to remotely copy a folder using scp
 #
-# version: 0.1.0
+# version: 0.2.0
 #
 # requirements:
 #
@@ -47,7 +47,7 @@ EXEC_DIR="$(dirname "$0")"
 
 . ${EXEC_DIR}/lib/args
 
-ARGS_FILE="${EXEC_DIR}/data/args.json"
+ARGS_FILE="${EXEC_DIR}/data/config.json"
 declare -A ARGS
 declare -a REQ_PROGRAMS=('sshpass' 'jq')
 
@@ -71,8 +71,9 @@ check_for_args_completeness
 ARG_username=${ARGS[1,0]}
 ARG_password=${ARGS[2,0]}
 ARG_website=${ARGS[3,0]}
-ARG_source=${ARGS[4,0]}
-ARG_destination=${ARGS[5,0]}
+ARG_port=${ARGS[4,0]}
+ARG_source=${ARGS[5,0]}
+ARG_destination=${ARGS[6,0]}
 
 # -----------------------------------------------------------------------------
 # perform remote folder copy
@@ -80,7 +81,7 @@ ARG_destination=${ARGS[5,0]}
 echo "Copying remote folder..."
 echo
 
-sshpass -p "${ARG_password}" scp -r "${ARG_username}"@"${ARG_website}":"${ARG_source}" "${ARG_destination}" &>/dev/null
+sshpass -p "${ARG_password}" scp -r "${ARG_port:+-P ${ARG_port}}" "${ARG_username}"@"${ARG_website}":"${ARG_source}" "${ARG_destination}" &>/dev/null
 err=$?
 
 if [ ${err} -ne 0 ]; then

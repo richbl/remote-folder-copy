@@ -18,7 +18,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 # bash library for command line argument loading/parsing/validating
 #
-# version: 0.1.0
+# version: 0.2.0
 #
 
 EXEC_DIR="$(dirname "$0")"
@@ -31,12 +31,14 @@ function load_args_file {
 
   ARGS_HEADER[1]=$(jq -r '.details.title' < ${ARGS_FILE})
   ARGS_HEADER[2]=$(jq -r '.details.syntax' < ${ARGS_FILE})
+  ARGS_HEADER[3]=$(jq -r '.details.version' < ${ARGS_FILE})
 
   for ((j=1;j<=COUNT_ARGS;j++)) do
     ARGS[${j},1]=$(jq -r '.arguments['${j}-1'] | .short_form' < ${ARGS_FILE})
     ARGS[${j},2]=$(jq -r '.arguments['${j}-1'] | .long_form' < ${ARGS_FILE})
     ARGS[${j},3]=$(jq -r '.arguments['${j}-1'] | .text_string' < ${ARGS_FILE})
     ARGS[${j},4]=$(jq -r '.arguments['${j}-1'] | .description' < ${ARGS_FILE})
+    ARGS[${j},5]=$(jq -r '.arguments['${j}-1'] | .required' < ${ARGS_FILE})
   done
 
 }
@@ -76,7 +78,7 @@ function check_for_args_completeness {
 
   ((COUNT_ERRS=0))
   for ((j=1;j<=COUNT_ARGS;j++)) do
-    if [ -z "${ARGS[${j},0]}" ]; then
+    if [ -z "${ARGS[${j},0]}" ] && [ "${ARGS[${j},5]}" == "true" ]; then
       echo "Error: ${ARGS[${j},3]} argument (${ARGS[${j},1]}|${ARGS[${j},2]}) missing."
       ((COUNT_ERRS++))
     fi
