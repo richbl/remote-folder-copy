@@ -113,7 +113,7 @@ While this package was written and tested under Linux (Ubuntu 15.10), there shou
 
 
 ## Basic Usage
-Copy-Remote-Folder is run through a command-line interface (CLI), so all of the command options are made available there.
+Remote-Folder-Copy is run through a command-line interface (CLI), so all of the command options are made available there.
 
 Here's the default response when running `remote_folder_copy.sh` with no parameters:
 
