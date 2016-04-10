@@ -119,9 +119,6 @@ When **Remote-Folder-Copy** is first run, it parses the command line to identify
       Error: password argument (-p|--password) missing.
 
 
-----
-
-
 
 ## Requirements
 
