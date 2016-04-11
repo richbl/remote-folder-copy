@@ -89,12 +89,12 @@ The informational banner that displays details about how to use the script is ge
       | Usage:
       |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
       |
-      |   -u, --username 		username (must have local/remote permissions)
-      |   -p, --password 		password used to access remote server
-      |   -w, --website 		website domain name (e.g., example.com)
+      |   -u, --username 	username (must have local/remote permissions)
+      |   -p, --password 	password used to access remote server
+      |   -w, --website 	website domain name (e.g., example.com)
       |   -P, --port 		website/server SSH port
       |   -s, --source 		absolute source folder path
-      |   -d, --destination 		destination folder path
+      |   -d, --destination 	destination folder path
       |
 
 ### Command Line Parsing and Completeness Testing
@@ -107,12 +107,12 @@ When **Remote-Folder-Copy** is first run, it parses the command line to identify
       | Usage:
       |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
       |
-      |   -u, --username 		username (must have local/remote permissions)
-      |   -p, --password 		password used to access remote server
-      |   -w, --website 		website domain name (e.g., example.com)
+      |   -u, --username 	username (must have local/remote permissions)
+      |   -p, --password 	password used to access remote server
+      |   -w, --website 	website domain name (e.g., example.com)
       |   -P, --port 		website/server SSH port
       |   -s, --source 		absolute source folder path
-      |   -d, --destination 		destination folder path
+      |   -d, --destination 	destination folder path
       |
 
       Error: username argument (-u|--username) missing.
@@ -144,12 +144,12 @@ Here's the default response when running `remote_folder_copy.sh` with no argumen
        | Usage:
        |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
        |
-       |   -u, --username 		username (must have local/remote permissions)
-       |   -p, --password 		password used to access remote server
-       |   -w, --website 		website domain name (e.g., example.com)
+       |   -u, --username 	username (must have local/remote permissions)
+       |   -p, --password 	password used to access remote server
+       |   -w, --website 	website domain name (e.g., example.com)
        |   -P, --port 		website/server SSH port
-       |   -s, --source 		absolute source folder path
-       |   -d, --destination 		destination folder path
+       |   -s, --source 	absolute source folder path
+       |   -d, --destination 	destination folder path
        |
 
       Error: username argument (-u|--username) missing.
@@ -173,12 +173,12 @@ When arguments are correctly passed, the script provides feedback on the success
      | Usage:
      |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
      |
-     |   -u, --username 		username (must have local/remote permissions)
-     |   -p, --password 		password used to access remote server
+     |   -u, --username 	username (must have local/remote permissions)
+     |   -p, --password 	password used to access remote server
      |   -w, --website 		website domain name (e.g., example.com)
      |   -P, --port 		website/server SSH port
      |   -s, --source 		absolute source folder path
-     |   -d, --destination 		destination folder path
+     |   -d, --destination 	destination folder path
      |
 
     Copying remote folder...
