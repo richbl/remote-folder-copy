@@ -29,7 +29,8 @@ The JSON file used in `remote_folder_copy.sh` is displayed below:
           {
             "title": "A bash script to remotely copy a folder using scp",
             "syntax": "remote_folder_copy -u username -p password -w website [-P port] -s source -d destination",
-            "version": "0.2.0"
+            "version": "0.3.0"
+            "compress_results": true
           },
         "arguments":
           [
@@ -84,16 +85,16 @@ The informational banner that displays details about how to use the script is ge
 
       |
       | A bash script to remotely copy a folder using scp
-      |   0.2.0
+      |   0.3.0
       |
       | Usage:
       |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
       |
-      |   -u, --username 	username (must have local/remote permissions)
-      |   -p, --password 	password used to access remote server
-      |   -w, --website 	website domain name (e.g., example.com)
-      |   -P, --port 		website/server SSH port
-      |   -s, --source 		absolute source folder path
+      |   -u, --username 		username (must have local/remote permissions)
+      |   -p, --password 		password used to access remote server
+      |   -w, --website 		website domain name (e.g., example.com)
+      |   -P, --port 			website/server SSH port
+      |   -s, --source 			absolute source folder path
       |   -d, --destination 	destination folder path
       |
 
@@ -102,16 +103,16 @@ When **Remote-Folder-Copy** is first run, it parses the command line to identify
 
       |
       | A bash script to remotely copy a folder using scp
-      |   0.2.0
+      |   0.3.0
       |
       | Usage:
       |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
       |
-      |   -u, --username 	username (must have local/remote permissions)
-      |   -p, --password 	password used to access remote server
-      |   -w, --website 	website domain name (e.g., example.com)
-      |   -P, --port 		website/server SSH port
-      |   -s, --source 		absolute source folder path
+      |   -u, --username 		username (must have local/remote permissions)
+      |   -p, --password 		password used to access remote server
+      |   -w, --website 		website domain name (e.g., example.com)
+      |   -P, --port 			website/server SSH port
+      |   -s, --source 			absolute source folder path
       |   -d, --destination 	destination folder path
       |
 
@@ -139,16 +140,16 @@ Here's the default response when running `remote_folder_copy.sh` with no argumen
 
        |
        | A bash script to remotely copy a folder using scp
-       |   0.2.0
+       |   0.3.0
        |
        | Usage:
        |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
        |
-       |   -u, --username 	username (must have local/remote permissions)
-       |   -p, --password 	password used to access remote server
-       |   -w, --website 	website domain name (e.g., example.com)
-       |   -P, --port 		website/server SSH port
-       |   -s, --source 	absolute source folder path
+       |   -u, --username 		username (must have local/remote permissions)
+       |   -p, --password 		password used to access remote server
+       |   -w, --website 		website domain name (e.g., example.com)
+       |   -P, --port 			website/server SSH port
+       |   -s, --source 		absolute source folder path
        |   -d, --destination 	destination folder path
        |
 
@@ -168,17 +169,17 @@ When arguments are correctly passed, the script provides feedback on the success
 
      |
      | A bash script to remotely copy a folder using scp
-     |   0.2.0
+     |   0.3.0
      |
      | Usage:
      |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
      |
-     |   -u, --username 	username (must have local/remote permissions)
-     |   -p, --password 	password used to access remote server
-     |   -w, --website 		website domain name (e.g., example.com)
-     |   -P, --port 		website/server SSH port
-     |   -s, --source 		absolute source folder path
-     |   -d, --destination 	destination folder path
+     |   -u, --username 		username (must have local/remote permissions)
+     |   -p, --password 		password used to access remote server
+     |   -w, --website 			website domain name (e.g., example.com)
+     |   -P, --port 			website/server SSH port
+     |   -s, --source 			absolute source folder path
+     |   -d, --destination 		destination folder path
      |
 
     Copying remote folder...
