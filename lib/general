@@ -18,7 +18,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 # bash library for general-purpose script processing
 #
-# version: 0.2.0
+# version: 0.3.0
 #
 
 # -----------------------------------------------------------------------------
@@ -44,11 +44,11 @@ function display_banner {
 
   echo
   echo " |"
-  echo " |" ${ARGS_HEADER[1]}
-  echo " |  " ${ARGS_HEADER[3]}
+  echo " |" ${ARG_TITLE}
+  echo " |  " ${ARG_VERSION}
   echo " |"
   echo " | Usage:"
-  echo " |  " ${ARGS_HEADER[2]}
+  echo " |  " ${ARG_SYNTAX}
   echo " |"
   for ((j=1;j<=COUNT_ARGS;j++)) do
     echo -e ' |  ' ${ARGS[${j},1]}',' ${ARGS[${j},2]}' \t\t'${ARGS[${j},4]}

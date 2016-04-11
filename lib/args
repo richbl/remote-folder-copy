@@ -18,7 +18,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 # bash library for command line argument loading/parsing/validating
 #
-# version: 0.2.0
+# version: 0.3.0
 #
 
 EXEC_DIR="$(dirname "$0")"
@@ -29,9 +29,10 @@ EXEC_DIR="$(dirname "$0")"
 #
 function load_args_file {
 
-  ARGS_HEADER[1]=$(jq -r '.details.title' < ${ARGS_FILE})
-  ARGS_HEADER[2]=$(jq -r '.details.syntax' < ${ARGS_FILE})
-  ARGS_HEADER[3]=$(jq -r '.details.version' < ${ARGS_FILE})
+  ARG_TITLE=$(jq -r '.details.title' < ${ARGS_FILE})
+  ARG_SYNTAX=$(jq -r '.details.syntax' < ${ARGS_FILE})
+  ARG_VERSION=$(jq -r '.details.version' < ${ARGS_FILE})
+  ARG_COMPRESSION=$(jq -r '.details.compress_results' < ${ARGS_FILE})
 
   for ((j=1;j<=COUNT_ARGS;j++)) do
     ARGS[${j},1]=$(jq -r '.arguments['${j}-1'] | .short_form' < ${ARGS_FILE})
@@ -44,7 +45,7 @@ function load_args_file {
 }
 
 # -----------------------------------------------------------------------------
-# scan cmdline for arguments
+# scan command line for arguments
 #
 function scan_for_args {
 
@@ -72,7 +73,7 @@ function scan_for_args {
 }
 
 # -----------------------------------------------------------------------------
-# check for args completeness
+# check for arguments completeness
 #
 function check_for_args_completeness {
 

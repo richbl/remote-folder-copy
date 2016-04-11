@@ -18,7 +18,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 # A bash script to remotely copy a folder using scp
 #
-# version: 0.2.0
+# version: 0.3.0
 #
 # requirements:
 #
@@ -81,14 +81,25 @@ ARG_destination=${ARGS[6,0]}
 echo "Copying remote folder..."
 echo
 
-sshpass -p "${ARG_password}" scp -r "${ARG_port:+-P ${ARG_port}}" "${ARG_username}"@"${ARG_website}":"${ARG_source}" "${ARG_destination}" &>/dev/null
-err=$?
+# dump to /tmp first to catch sshpass errors
+#
+sshpass -p "${ARG_password}" scp -r -P "${ARG_port:-22}" "${ARG_username}"@"${ARG_website}":"${ARG_source}" "/tmp" &>/dev/null;
+RETURN_CODE=$?
 
-if [ ${err} -ne 0 ]; then
-  echo "Error: sshpass return code ${err} encountered (see http://linux.die.net/man/1/sshpass for details)."
+if [ ${RETURN_CODE} -ne 0 ]; then
+  rm -rf "/tmp/${ARG_source##*/}"
+  echo "Error: sshpass return code ${RETURN_CODE} encountered (see http://linux.die.net/man/1/sshpass for details)."
   echo "Remote folder copy failed."
   quit
 else
+
+  if [ "${ARG_COMPRESSION}" == "true" ]; then
+    ARCHIVE="${ARG_website}"-"${ARG_source##*/}"-"$(date +"%Y%m%d%H%M%S")".tar.gz
+    tar -zcf "${ARG_destination}/${ARCHIVE}" -C /tmp "${ARG_source##*/}"
+  else
+    mv "/tmp/${ARG_source##*/}" "${ARG_destination}" &>/dev/null;
+  fi
+
   echo "Success."
   echo "Remote folder ${ARG_website}:${ARG_source} copied to ${ARG_destination}/"${ARG_source##*/}"."
   echo
