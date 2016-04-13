@@ -5,7 +5,7 @@
 
 ## Developed with a Bash Template (BaT)
 
-**Remote-Folder-Copy** uses a bash template designed to make script development and command line argument management more robust, easier to implement, and easier to maintain. This BaT includes the following features:
+**Remote-Folder-Copy** uses a bash template (BaT) called **[A-Bash-Template](https://github.com/richbl/a-bash-template)** designed to make script development and command line argument management more robust, easier to implement, and easier to maintain. Here are a few of those features:
 
 - Dependencies checker: a routine that checks all external program dependencies (*e.g.*, [sshpass](http://linux.die.net/man/1/sshpass) and [jq](https://stedolan.github.io/jq/))
 - Arguments and script details--such as script description and syntax--are stored in the [JSON](http://www.json.org/) file format (*i.e.*, `config.json`)
