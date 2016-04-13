@@ -17,16 +17,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # -----------------------------------------------------------------------------
 #
 # A bash script to remotely copy a folder using scp
-#
 # version: 0.4.0
 #
 # requirements:
-#
 #  --sshpass command installed
 #  --jq (json query) command installed
 #
 # inputs:
-#
 #  --username
 #  --user password
 #  --website/server (domain name) to access
@@ -34,7 +31,6 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #  --folder destination location
 #
 # outputs:
-#
 #  --notification of success/failure
 #  --side-effect: moved folder
 #
@@ -47,20 +43,14 @@ EXEC_DIR="$(dirname "$0")"
 . ${EXEC_DIR}/lib/args
 
 ARGS_FILE="${EXEC_DIR}/data/config.json"
-declare -A ARGS
 
 # [user-config] set any external program dependencies here
 declare -a REQ_PROGRAMS=('jq')
 
 # -----------------------------------------------------------------------------
-# check script dependencies and set vars
-#
-check_dependencies "REQ_PROGRAMS[@]"
-COUNT_ARGS=$(jq '.arguments | length'< ${ARGS_FILE})
-
-# -----------------------------------------------------------------------------
 # perform script configuration, arguments parsing, and validation
 #
+check_dependencies "REQ_PROGRAMS[@]"
 display_banner
 scan_for_args "$@"
 check_for_args_completeness
