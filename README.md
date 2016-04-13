@@ -36,7 +36,7 @@ Here's the default response when running `remote_folder_copy.sh` with no argumen
 
        |
        | A bash script to remotely copy a folder using scp
-       |   0.3.0
+       |   0.4.0
        |
        | Usage:
        |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
@@ -65,7 +65,7 @@ When arguments are correctly passed, the script provides feedback on the success
 
      |
      | A bash script to remotely copy a folder using scp
-     |   0.3.0
+     |   0.4.0
      |
      | Usage:
      |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
