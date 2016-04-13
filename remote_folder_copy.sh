@@ -18,7 +18,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 # A bash script to remotely copy a folder using scp
 #
-# version: 0.3.0
+# version: 0.4.0
 #
 # requirements:
 #
@@ -44,12 +44,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 shopt -s extglob
 EXEC_DIR="$(dirname "$0")"
-
 . ${EXEC_DIR}/lib/args
 
 ARGS_FILE="${EXEC_DIR}/data/config.json"
 declare -A ARGS
-declare -a REQ_PROGRAMS=('sshpass' 'jq')
+
+# [user-config] set any external program dependencies here
+declare -a REQ_PROGRAMS=('jq')
 
 # -----------------------------------------------------------------------------
 # check script dependencies and set vars
@@ -60,20 +61,9 @@ COUNT_ARGS=$(jq '.arguments | length'< ${ARGS_FILE})
 # -----------------------------------------------------------------------------
 # perform script configuration, arguments parsing, and validation
 #
-load_args_file
 display_banner
 scan_for_args "$@"
 check_for_args_completeness
-
-# -----------------------------------------------------------------------------
-# template assignments to make remaining code easier to read (optional)
-#
-ARG_username=${ARGS[1,0]}
-ARG_password=${ARGS[2,0]}
-ARG_website=${ARGS[3,0]}
-ARG_port=${ARGS[4,0]}
-ARG_source=${ARGS[5,0]}
-ARG_destination=${ARGS[6,0]}
 
 # -----------------------------------------------------------------------------
 # perform remote folder copy
@@ -83,24 +73,24 @@ echo
 
 # dump to /tmp first to catch sshpass errors
 #
-sshpass -p "${ARG_password}" scp -r -P "${ARG_port:-22}" "${ARG_username}"@"${ARG_website}":"${ARG_source}" "/tmp" &>/dev/null;
+ARG_PORT=$(get_config_arg_value port)
+sshpass -p "$(get_config_arg_value password)" scp -r -P "${ARG_PORT:-22}" "$(get_config_arg_value username)"@"$(get_config_arg_value website)":"$(get_config_arg_value source)" "/tmp" &>/dev/null;
 RETURN_CODE=$?
 
 if [ ${RETURN_CODE} -ne 0 ]; then
-  rm -rf "/tmp/${ARG_source##*/}"
+  rm -rf "/tmp/$(basename $(get_config_arg_value source))"
   echo "Error: sshpass return code ${RETURN_CODE} encountered (see http://linux.die.net/man/1/sshpass for details)."
   echo "Remote folder copy failed."
   quit
 else
-
-  if [ "${ARG_COMPRESSION}" == "true" ]; then
-    ARCHIVE="${ARG_website}"-"${ARG_source##*/}"-"$(date +"%Y%m%d%H%M%S")".tar.gz
-    tar -zcf "${ARG_destination}/${ARCHIVE}" -C /tmp "${ARG_source##*/}"
+  if [ "$(get_config_details compress_results)" == "true" ]; then
+    ARCHIVE="$(get_config_arg_value website)"-"$(basename $(get_config_arg_value source))"-"$(date +"%Y%m%d%H%M%S")".tar.gz
+    tar -zcf "$(get_config_arg_value destination)/${ARCHIVE}" -C /tmp "$(basename $(get_config_arg_value source))"
   else
-    mv "/tmp/${ARG_source##*/}" "${ARG_destination}" &>/dev/null;
+    mv "/tmp/$(basename $(get_config_arg_value source))" "$(get_config_arg_value destination)" &>/dev/null;
   fi
 
   echo "Success."
-  echo "Remote folder ${ARG_website}:${ARG_source} copied to ${ARG_destination}/"${ARG_source##*/}"."
+  echo "Remote folder $(get_config_arg_value website):$(get_config_arg_value source) copied to $(get_config_arg_value destination)/"$(basename $(get_config_arg_value source))"."
   echo
 fi

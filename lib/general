@@ -18,7 +18,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 # bash library for general-purpose script processing
 #
-# version: 0.3.0
+# version: 0.4.0
 #
 
 # -----------------------------------------------------------------------------
@@ -35,6 +35,7 @@ function check_dependencies {
       quit
     fi
   done
+
 }
 
 # -----------------------------------------------------------------------------
@@ -44,15 +45,18 @@ function display_banner {
 
   echo
   echo " |"
-  echo " |" ${ARG_TITLE}
-  echo " |  " ${ARG_VERSION}
+  echo " |" $(get_config_details title)
+  echo " |  " $(get_config_details version)
   echo " |"
   echo " | Usage:"
-  echo " |  " ${ARG_SYNTAX}
+  echo " |  " $(get_config_details syntax)
   echo " |"
-  for ((j=1;j<=COUNT_ARGS;j++)) do
-    echo -e ' |  ' ${ARGS[${j},1]}',' ${ARGS[${j},2]}' \t\t'${ARGS[${j},4]}
+
+  local COUNT_ARGS=$(get_config_args_length)
+  for ((j=0;j<COUNT_ARGS;j++)) do
+    echo -e ' |  ' $(get_config_arg $j short_form)',' $(get_config_arg $j long_form)' \t\t'$(get_config_arg $j description)
   done
+
   echo " |"
   echo
 
