@@ -45,7 +45,7 @@ EXEC_DIR="$(dirname "$0")"
 ARGS_FILE="${EXEC_DIR}/data/config.json"
 
 # [user-config] set any external program dependencies here
-declare -a REQ_PROGRAMS=('jq')
+declare -a REQ_PROGRAMS=('jq' 'sshpass')
 
 # -----------------------------------------------------------------------------
 # perform script configuration, arguments parsing, and validation
