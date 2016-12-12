@@ -1,5 +1,5 @@
 # Remote-Folder-Copy
-**Remote-Folder-Copy** (`remote_folder_copy.sh`) is a [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) script to remotely copy a folder using the secure remote copy ([scp](http://man7.org/linux/man-pages/man1/scp.1.html)) command.
+**Remote-Folder-Copy** (`remote_folder_copy.sh`) is a [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) script to remotely copy a folder using the secure remote copy ([scp](http://man7.org/linux/man-pages/man1/scp.1.html)) command, or the less-secure [sshpass](http://linux.die.net/man/1/sshpass) command when the localhost user is not certificate-authenticated on the remote server.
 
 `run_remote_folder_copy.sh` is a related wrapper script intended to be used for making unattended script calls into `remote_folder_copy.sh` (*e.g.*, running cron jobs).
 
@@ -19,12 +19,12 @@ For more details about using a bash template, [check out the BaT sources here](h
 
 ## Requirements
 
- - An operational [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) environment (bash 4.3.2 used during development)
+ - An operational [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) environment (bash 4.3.46 used during development)
  -  Two additional external programs:
-    + [sshpass](http://linux.die.net/man/1/sshpass), for piping password into the [scp](http://man7.org/linux/man-pages/man1/scp.1.html) command when [scp](http://man7.org/linux/man-pages/man1/scp.1.html) cannot be used directly (*e.g.*, localhost user does not have remote authorization)
+    + [sshpass](http://linux.die.net/man/1/sshpass), for piping password into the [scp](http://man7.org/linux/man-pages/man1/scp.1.html) command when [scp](http://man7.org/linux/man-pages/man1/scp.1.html) cannot be used directly (*e.g.*, localhost user is not certificate-authenticated on the remote server)
     + [jq](https://stedolan.github.io/jq/), for parsing the `config.json` file
 
-While this package was written and tested under Linux (Ubuntu 15.10), there should be no reason why this won't work under other Unix-like operating systems.
+While this package was written and tested under Linux (Ubuntu 16.10), there should be no reason why this won't work under other Unix-like operating systems.
 
 
 ## Basic Usage
@@ -80,3 +80,8 @@ When arguments are correctly passed, the script provides feedback on the success
 
     Success.
     Remote folder example.com:/home/user/src copied to /home/user/desktop/src.
+
+### Choosing Between the `scp` and `sshpass` Commands
+**Remote-Folder-Copy** (`remote_folder_copy.sh`) uses two methods for copying folders from a remote server: [scp](http://man7.org/linux/man-pages/man1/scp.1.html) and [sshpass](http://linux.die.net/man/1/sshpass). The decision on which command to use is based on whether the `-p, --password` argument has been passed into the script. If no password is used, then the [scp](http://man7.org/linux/man-pages/man1/scp.1.html) command is used directly. If a password is passed into the script, then the [sshpass](http://linux.die.net/man/1/sshpass) command is used instead.
+
+In general, it's preferred to use [scp](http://man7.org/linux/man-pages/man1/scp.1.html) with a current [certificate of authority](https://www.ssh.com/manuals/server-admin/44/Server_Authentication_with_Certificates.html) in place on the remote server. For the security-minded, users of this script should review the section entitled *Security Considerations* on the [sshpass](http://linux.die.net/man/1/sshpass) website.
