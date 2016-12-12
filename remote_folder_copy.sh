@@ -17,7 +17,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # -----------------------------------------------------------------------------
 #
 # A bash script to remotely copy a folder using scp
-# version: 0.4.0
+# version: 0.5.0
 #
 # requirements:
 #  --sshpass command installed
@@ -31,7 +31,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #  --folder destination location
 #
 # outputs:
-#  --notification of success/failure
+#  --notification of success/failure (error code 0/1 passed on exit)
 #  --side-effect: moved folder
 #
 
@@ -71,7 +71,7 @@ if [ ${RETURN_CODE} -ne 0 ]; then
   rm -rf "/tmp/$(basename $(get_config_arg_value source))"
   echo "Error: sshpass return code ${RETURN_CODE} encountered (see http://linux.die.net/man/1/sshpass for details)."
   echo "Remote folder copy failed."
-  quit
+  quit 1
 else
   if [ "$(get_config_details compress_results)" == "true" ]; then
     ARCHIVE="$(get_config_arg_value website)"-"$(basename $(get_config_arg_value source))"-"$(date +"%Y%m%d%H%M%S")".tar.gz
@@ -82,5 +82,5 @@ else
 
   echo "Success."
   echo "Remote folder $(get_config_arg_value website):$(get_config_arg_value source) copied to $(get_config_arg_value destination)/"$(basename $(get_config_arg_value source))"."
-  echo
+  quit 0
 fi
