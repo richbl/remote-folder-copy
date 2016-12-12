@@ -2,8 +2,8 @@
   "details":
     {
       "title": "A bash script to remotely copy a folder using scp",
-      "syntax": "remote_folder_copy.sh -u username -p password -w website [-P port] -s source -d destination",
-      "version": "0.4.0",
+      "syntax": "remote_folder_copy.sh -u username [-p password] -w website [-P port] -s source -d destination",
+      "version": "0.6.0",
       "compress_results": true
     },
   "arguments":
@@ -19,8 +19,8 @@
         "short_form": "-p",
         "long_form": "--password",
         "text_string": "password",
-        "description": "password used to access remote server",
-        "required": true
+        "description": "password used to access remote server (optional)",
+        "required": false
       },
       {
         "short_form": "-w",

@@ -17,7 +17,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # -----------------------------------------------------------------------------
 #
 # A bash script to remotely copy a folder using scp
-# version: 0.5.0
+# version: 0.6.0
 #
 # requirements:
 #  --sshpass command installed
@@ -25,7 +25,8 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 #
 # inputs:
 #  --username
-#  --user password
+#  --user password (optional)
+#  --scp port (default:22)
 #  --website/server (domain name) to access
 #  --folder source location
 #  --folder destination location
@@ -58,18 +59,36 @@ check_for_args_completeness
 # -----------------------------------------------------------------------------
 # perform remote folder copy
 #
-echo "Copying remote folder..."
-echo
-
-# dump to /tmp first to catch sshpass errors
-#
 ARG_PORT=$(get_config_arg_value port)
-sshpass -p "$(get_config_arg_value password)" scp -r -P "${ARG_PORT:-22}" "$(get_config_arg_value username)"@"$(get_config_arg_value website)":"$(get_config_arg_value source)" "/tmp" &>/dev/null;
-RETURN_CODE=$?
+PASSWORD=$(get_config_arg_value password)
 
+if [ -z ${PASSWORD} ]; then
+  # no password passed in arguments, so use scp
+  #
+  echo "Copying remote folder using scp..."
+  echo
+  scp -r -P "${ARG_PORT:-22}" "$(get_config_arg_value username)"@"$(get_config_arg_value website)":"$(get_config_arg_value source)" "/tmp" &>/dev/null;
+  RETURN_CODE=$?
+else
+  # password passed in arguments, so use sshpass
+  #
+  echo "Copying remote folder using sshpass..."
+  echo
+  sshpass -p "$(get_config_arg_value password)" scp -r -P "${ARG_PORT:-22}" "$(get_config_arg_value username)"@"$(get_config_arg_value website)":"$(get_config_arg_value source)" "/tmp" &>/dev/null;
+  RETURN_CODE=$?
+fi
+
+# check for error codes, move folder to final destination, and clean up
+#
 if [ ${RETURN_CODE} -ne 0 ]; then
   rm -rf "/tmp/$(basename $(get_config_arg_value source))"
-  echo "Error: sshpass return code ${RETURN_CODE} encountered (see http://linux.die.net/man/1/sshpass for details)."
+
+  if [ -z ${PASSWORD} ]; then
+    echo "Error: scp return code ${RETURN_CODE} encountered (see https://linux.die.net/man/1/scp for details)."
+  else
+    echo "Error: sshpass return code ${RETURN_CODE} encountered (see http://linux.die.net/man/1/sshpass for details)."
+  fi
+
   echo "Remote folder copy failed."
   quit 1
 else

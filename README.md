@@ -1,7 +1,7 @@
 # Remote-Folder-Copy
 **Remote-Folder-Copy** (`remote_folder_copy.sh`) is a [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) script to remotely copy a folder using the secure remote copy ([scp](http://man7.org/linux/man-pages/man1/scp.1.html)) command.
 
-`run_remote_folder_copy.sh` is a related script intended to be used for making unattended script calls into `remote_folder_copy.sh` (*e.g.*, running cron jobs).
+`run_remote_folder_copy.sh` is a related wrapper script intended to be used for making unattended script calls into `remote_folder_copy.sh` (*e.g.*, running cron jobs).
 
 ## [<img src="https://cloud.githubusercontent.com/assets/10182110/18208786/ae5d76b2-70e5-11e6-9663-cfe47d13f4d9.png" width="150" />](https://github.com/richbl/a-bash-template)Developed with a Bash Template (BaT)
 
@@ -21,7 +21,7 @@ For more details about using a bash template, [check out the BaT sources here](h
 
  - An operational [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) environment (bash 4.3.2 used during development)
  -  Two additional external programs:
-    + [sshpass](http://linux.die.net/man/1/sshpass), for piping password into the ([scp](http://man7.org/linux/man-pages/man1/scp.1.html)) command
+    + [sshpass](http://linux.die.net/man/1/sshpass), for piping password into the [scp](http://man7.org/linux/man-pages/man1/scp.1.html) command when [scp](http://man7.org/linux/man-pages/man1/scp.1.html) cannot be used directly (*e.g.*, localhost user does not have remote authorization)
     + [jq](https://stedolan.github.io/jq/), for parsing the `config.json` file
 
 While this package was written and tested under Linux (Ubuntu 15.10), there should be no reason why this won't work under other Unix-like operating systems.
@@ -36,13 +36,13 @@ Here's the default response when running `remote_folder_copy.sh` with no argumen
 
        |
        | A bash script to remotely copy a folder using scp
-       |   0.4.0
+       |   0.6.0
        |
        | Usage:
-       |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
+       |   remote_folder_copy -u username [-p password] -w website [-P port] -s source -d destination
        |
        |   -u, --username 		username (must have local/remote permissions)
-       |   -p, --password 		password used to access remote server
+       |   -p, --password 		password used to access remote server (optional)
        |   -w, --website 		website domain name (e.g., example.com)
        |   -P, --port 			website/server SSH port
        |   -s, --source 		absolute source folder path
@@ -50,11 +50,9 @@ Here's the default response when running `remote_folder_copy.sh` with no argumen
        |
 
       Error: username argument (-u|--username) missing.
-      Error: password argument (-p|--password) missing.
       Error: website argument (-w|--website) missing.
       Error: source argument (-s|--source) missing.
       Error: destination argument (-d|--destination) missing.
-
 
 
 In this example, the program responds by indicating that the required script arguments must be set before proper operation.
@@ -65,17 +63,17 @@ When arguments are correctly passed, the script provides feedback on the success
 
      |
      | A bash script to remotely copy a folder using scp
-     |   0.4.0
+     |   0.6.0
      |
      | Usage:
-     |   remote_folder_copy -u username -p password -w website [-P port] -s source -d destination
+     |   remote_folder_copy -u username [-p password] -w website [-P port] -s source -d destination
      |
      |   -u, --username 		username (must have local/remote permissions)
-     |   -p, --password 		password used to access remote server
-     |   -w, --website 			website domain name (e.g., example.com)
+     |   -p, --password 		password used to access remote server (optional)
+     |   -w, --website 		website domain name (e.g., example.com)
      |   -P, --port 			website/server SSH port
-     |   -s, --source 			absolute source folder path
-     |   -d, --destination 		destination folder path
+     |   -s, --source 		absolute source folder path
+     |   -d, --destination 	destination folder path
      |
 
     Copying remote folder...
