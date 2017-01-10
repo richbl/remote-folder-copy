@@ -3,6 +3,8 @@
 
 `run_remote_folder_copy.sh` is a related wrapper script intended to be used for making unattended script calls into `remote_folder_copy.sh` (*e.g.*, running cron jobs).
 
+> Note that *this project has been replaced* by a backward-compatible upgrade project called [**Remote-Copy**](https://github.com/richbl/remote-copy) which permits the secure remote copy of both files and folders. As a result, **this project will no longer be maintained** in favor of support for this more comprehensive project.
+
 ## [<img src="https://cloud.githubusercontent.com/assets/10182110/18208786/ae5d76b2-70e5-11e6-9663-cfe47d13f4d9.png" width="150" />](https://github.com/richbl/a-bash-template)Developed with a Bash Template (BaT)
 
 **Remote-Folder-Copy** uses a bash template (BaT) called **[A-Bash-Template](https://github.com/richbl/a-bash-template)** designed to make script development and command line argument management more robust, easier to implement, and easier to maintain. Here are a few of those features:
