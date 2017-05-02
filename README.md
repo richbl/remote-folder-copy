@@ -1,9 +1,10 @@
 # Remote-Folder-Copy
+
+> **Deprecated project**: note that *this project has been replaced* by a backward-compatible upgrade called [**Remote-Copy**](https://github.com/richbl/remote-copy) which permits the secure remote copy of both files and folders. As a result, **this project will no longer be maintained** in favor of support for this more comprehensive project.
+
 **Remote-Folder-Copy** (`remote_folder_copy.sh`) is a [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) script to remotely copy a folder using the secure remote copy ([scp](http://man7.org/linux/man-pages/man1/scp.1.html)) command, or the less-secure [sshpass](http://linux.die.net/man/1/sshpass) command when the localhost user is not certificate-authenticated on the remote server.
 
 `run_remote_folder_copy.sh` is a related wrapper script intended to be used for making unattended script calls into `remote_folder_copy.sh` (*e.g.*, running cron jobs).
-
-> Note that *this project has been replaced* by a backward-compatible upgrade project called [**Remote-Copy**](https://github.com/richbl/remote-copy) which permits the secure remote copy of both files and folders. As a result, **this project will no longer be maintained** in favor of support for this more comprehensive project.
 
 ## [<img src="https://cloud.githubusercontent.com/assets/10182110/18208786/ae5d76b2-70e5-11e6-9663-cfe47d13f4d9.png" width="150" />](https://github.com/richbl/a-bash-template)Developed with a Bash Template (BaT)
 
