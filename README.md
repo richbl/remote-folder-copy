@@ -1,4 +1,4 @@
-> **Deprecated project**: note that *this project has been replaced* by a backward-compatible upgrade called [**Remote-Copy**](https://github.com/richbl/remote-copy) which permits the secure remote copy of both files and folders. As a result, **this project will no longer be maintained** in favor of support for this more comprehensive project.
+> **DEPRECATED PROJECT**: note that *this project has been replaced* by a backward-compatible upgrade called [**Remote-Copy**](https://github.com/richbl/remote-copy) which permits the secure remote copy of both files and folders. As a result, **this project will no longer be maintained** in favor of support for this more comprehensive project.
 
 # Remote-Folder-Copy
 
